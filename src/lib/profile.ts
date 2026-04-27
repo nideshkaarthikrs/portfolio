@@ -67,28 +67,57 @@ export type ThoughtCard = {
   preview: string;
 };
 
-function titleFromLinkedInUrl(url: string) {
+function wordsToTitle(value: string) {
+  return value
+    .split(" ")
+    .filter(Boolean)
+    .map((word) => word[0].toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+function wordsFromLinkedInUrl(url: string) {
   try {
     const parsed = new URL(normalizeUrl(url));
-    const segments = parsed.pathname.split("/").filter(Boolean);
-    const last = segments[segments.length - 1] ?? "linkedin-post";
-    const cleaned = decodeURIComponent(last)
+    const postSegment =
+      parsed.pathname
+        .split("/")
+        .filter(Boolean)
+        .find((segment) => segment.includes("-activity-")) ?? "";
+
+    const slugPart = postSegment.split("-activity-")[0] || postSegment;
+    const rawWords = decodeURIComponent(slugPart)
       .replace(/[-_]/g, " ")
-      .replace(/\d+/g, "")
+      .replace(/[^\w\s]/g, " ")
+      .toLowerCase()
       .trim();
-    const titleBase = cleaned || "LinkedIn Post";
-    return titleBase.replace(/\b\w/g, (letter) => letter.toUpperCase());
+
+    const words = rawWords
+      .split(" ")
+      .filter((word) => word.length > 2)
+      .filter((word) => !["www", "linkedin", "posts", "activity"].includes(word));
+
+    return words.slice(0, 12);
   } catch {
-    return "LinkedIn Post";
+    return [];
   }
 }
 
 export function buildThoughtCards(links: string[]): ThoughtCard[] {
-  return links.map((link, index) => ({
-    url: normalizeUrl(link),
-    title: titleFromLinkedInUrl(link),
-    preview: `Thought #${index + 1} from my LinkedIn feed on software, AI, and growth.`,
-  }));
+  return links.map((link, index) => {
+    const words = wordsFromLinkedInUrl(link);
+    const titleWords = words.slice(0, 6);
+    const previewWords = words.slice(6, 22);
+
+    return {
+      url: normalizeUrl(link),
+      title: titleWords.length
+        ? wordsToTitle(titleWords.join(" "))
+        : `LinkedIn Thought #${index + 1}`,
+      preview: previewWords.length
+        ? `${wordsToTitle(previewWords.join(" "))}.`
+        : `Sharing practical thoughts on software, AI, building products, and growth.`,
+    };
+  });
 }
 
 export async function getProfileData(): Promise<ProfileData> {
@@ -109,9 +138,9 @@ export async function getProfileData(): Promise<ProfileData> {
     .filter(Boolean);
 
   const linkedinPostLinks = Array.from(
-    content.matchAll(/-\s*(https?:\/\/(?:www\.)?linkedin\.com\/[^\s)]+)/gi),
+    content.matchAll(/https?:\/\/(?:www\.)?linkedin\.com\/[^\s)]+/gi),
   )
-    .map((match) => normalizeUrl(match[1]))
+    .map((match) => normalizeUrl(match[0]))
     .filter(
       (link, index, arr) =>
         arr.indexOf(link) === index &&
