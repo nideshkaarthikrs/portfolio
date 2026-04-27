@@ -21,10 +21,10 @@ export default async function Home() {
   return (
     <>
       <section className="relative overflow-hidden py-20">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.24),transparent_55%),radial-gradient(circle_at_bottom_right,_rgba(250,204,21,0.18),transparent_40%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.28),transparent_55%),radial-gradient(circle_at_bottom_right,_rgba(239,68,68,0.2),transparent_44%)]" />
         <div className="relative max-w-3xl">
-          <p className="mb-5 inline-block rounded-full border border-amber-300/40 bg-amber-300/10 px-4 py-2 text-sm text-amber-200">
-            Pokemon-themed portfolio
+          <p className="mb-5 inline-block rounded-full border border-red-300/50 bg-red-400/15 px-4 py-2 text-sm text-red-100">
+            Kanto-style trainer portfolio
           </p>
           <h1 className="text-4xl font-bold leading-tight md:text-6xl">
             {profile.name}
@@ -36,17 +36,17 @@ export default async function Home() {
               href={profile.githubUrl}
               target="_blank"
               rel="noreferrer"
-              className="rounded-full bg-indigo-500 px-6 py-3 font-semibold text-white transition hover:bg-indigo-400"
+              className="pokemon-button rounded-full bg-yellow-300 px-6 py-3 font-semibold text-slate-900"
             >
-              GitHub
+              Pokedex (GitHub)
             </a>
             <a
               href={profile.linkedinUrl}
               target="_blank"
               rel="noreferrer"
-              className="rounded-full border border-white/20 px-6 py-3 font-semibold text-white transition hover:border-amber-300 hover:text-amber-200"
+              className="pokemon-button rounded-full bg-blue-500 px-6 py-3 font-semibold text-white"
             >
-              LinkedIn
+              Trainer Log (LinkedIn)
             </a>
           </div>
         </div>
@@ -62,7 +62,7 @@ export default async function Home() {
           {profile.goalsAndHobbies.map((item) => (
             <span
               key={item}
-              className="rounded-full border border-indigo-300/30 bg-indigo-400/10 px-3 py-1 text-sm text-indigo-100"
+              className="rounded-full border border-blue-300/40 bg-blue-400/15 px-3 py-1 text-sm text-blue-100"
             >
               {item}
             </span>
@@ -91,7 +91,7 @@ export default async function Home() {
           {skills.map((skill) => (
             <li
               key={skill}
-              className="rounded-full border border-amber-300/40 bg-amber-300/10 px-4 py-2 text-sm text-amber-100"
+              className="rounded-full border border-yellow-300/45 bg-yellow-300/15 px-4 py-2 text-sm text-yellow-100"
             >
               {skill}
             </li>
@@ -105,9 +105,9 @@ export default async function Home() {
         </p>
         <Link
           href="/contact"
-          className="mt-4 inline-flex rounded-full bg-amber-300 px-5 py-2 font-medium text-slate-900 hover:bg-amber-200"
+          className="pokemon-button mt-4 inline-flex rounded-full bg-red-500 px-5 py-2 font-semibold text-white"
         >
-          Get in touch
+          Send Challenge Invite
         </Link>
       </Section>
     </>

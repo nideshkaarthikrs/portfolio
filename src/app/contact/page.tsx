@@ -16,17 +16,17 @@ export default async function ContactPage() {
             href={profile.githubUrl}
             target="_blank"
             rel="noreferrer"
-            className="rounded-full border border-indigo-300/40 px-5 py-2 hover:bg-indigo-300/10"
+            className="pokemon-button rounded-full bg-yellow-300 px-5 py-2 font-semibold text-slate-900"
           >
-            GitHub
+            Pokedex (GitHub)
           </a>
           <a
             href={profile.linkedinUrl}
             target="_blank"
             rel="noreferrer"
-            className="rounded-full border border-amber-300/40 px-5 py-2 hover:bg-amber-300/10"
+            className="pokemon-button rounded-full bg-blue-500 px-5 py-2 font-semibold text-white"
           >
-            LinkedIn
+            Trainer Log (LinkedIn)
           </a>
         </div>
       </div>
