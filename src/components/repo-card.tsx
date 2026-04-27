@@ -2,7 +2,7 @@ import type { Repo } from "@/lib/github";
 
 export function RepoCard({ repo }: { repo: Repo }) {
   return (
-    <article className="group rounded-2xl border border-indigo-200/20 bg-gradient-to-b from-indigo-500/10 to-slate-900 p-6 shadow-lg shadow-indigo-900/20 transition hover:-translate-y-1 hover:border-amber-300/40">
+    <article className="premium-card group rounded-2xl border border-indigo-200/20 bg-gradient-to-b from-indigo-500/10 to-slate-900 p-5 shadow-lg shadow-indigo-900/20 sm:p-6">
       <h3 className="text-lg font-semibold text-white">{repo.name}</h3>
       <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-300">
         {repo.readmeDescription ?? repo.description ?? "No description provided yet."}

@@ -23,6 +23,9 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  background-image:
+    radial-gradient(circle at 10% 5%, rgba(99, 102, 241, 0.2), transparent 32%),
+    radial-gradient(circle at 90% 0%, rgba(250, 204, 21, 0.12), transparent 24%);
 }
 
 html {
@@ -32,4 +35,67 @@ html {
 ::selection {
   background: #facc15;
   color: #0f172a;
+}
+
+.page-enter {
+  animation: page-enter 0.42s ease-out both;
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.995);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.premium-card {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    background-color 220ms ease;
+}
+
+.premium-card::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: radial-gradient(circle, rgba(250, 204, 21, 0.18), transparent 44%);
+  transform: translateX(-120%) translateY(35%);
+  opacity: 0;
+  transition: transform 300ms ease, opacity 300ms ease;
+  pointer-events: none;
+}
+
+.premium-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(250, 204, 21, 0.45);
+  box-shadow: 0 22px 38px rgba(15, 23, 42, 0.55);
+}
+
+.premium-card:hover::before {
+  transform: translateX(0) translateY(0);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .page-enter,
+  .premium-card,
+  .premium-card::before {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
 }

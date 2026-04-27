@@ -11,14 +11,17 @@ const links = [
 export function SiteNav() {
   return (
     <header className="sticky top-0 z-30 border-b border-white/10 bg-slate-950/75 backdrop-blur-xl">
-      <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
+      <nav className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <Link href="/" className="font-bold tracking-wide text-white">
           Nidesh<span className="text-amber-300">.dev</span>
         </Link>
-        <ul className="flex items-center gap-5 text-sm text-slate-200">
+        <ul className="flex w-full items-center gap-2 overflow-x-auto pb-1 text-sm text-slate-200 sm:w-auto sm:gap-5 sm:pb-0">
           {links.map((link) => (
             <li key={link.href}>
-              <Link className="transition hover:text-amber-300" href={link.href}>
+              <Link
+                className="inline-flex rounded-full border border-transparent px-3 py-1.5 transition hover:border-amber-300/30 hover:text-amber-300"
+                href={link.href}
+              >
                 {link.label}
               </Link>
             </li>

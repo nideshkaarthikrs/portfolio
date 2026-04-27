@@ -6,7 +6,7 @@ export function ThoughtCard({ thought }: { thought: ThoughtCardType }) {
       href={thought.url}
       target="_blank"
       rel="noreferrer"
-      className="rounded-2xl border border-white/10 bg-slate-900/70 p-6 transition hover:border-indigo-300/40 hover:bg-slate-900"
+      className="premium-card rounded-2xl border border-white/10 bg-slate-900/70 p-5 sm:p-6"
     >
       <h3 className="line-clamp-2 text-lg font-semibold text-white">{thought.title}</h3>
       <p className="mt-3 line-clamp-4 text-sm leading-6 text-slate-300">
