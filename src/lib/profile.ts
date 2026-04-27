@@ -9,6 +9,7 @@ export type ProfileData = {
   linkedinUrl: string;
   goalsAndHobbies: string[];
   projectLinks: string[];
+  linkedinPostLinks: string[];
 };
 
 const fallbackContent = `# About Me
@@ -43,6 +44,36 @@ function normalizeUrl(value: string) {
   return `https://${value}`;
 }
 
+export type ThoughtCard = {
+  url: string;
+  title: string;
+  preview: string;
+};
+
+function titleFromLinkedInUrl(url: string) {
+  try {
+    const parsed = new URL(normalizeUrl(url));
+    const segments = parsed.pathname.split("/").filter(Boolean);
+    const last = segments[segments.length - 1] ?? "linkedin-post";
+    const cleaned = decodeURIComponent(last)
+      .replace(/[-_]/g, " ")
+      .replace(/\d+/g, "")
+      .trim();
+    const titleBase = cleaned || "LinkedIn Post";
+    return titleBase.replace(/\b\w/g, (letter) => letter.toUpperCase());
+  } catch {
+    return "LinkedIn Post";
+  }
+}
+
+export function buildThoughtCards(links: string[]): ThoughtCard[] {
+  return links.map((link, index) => ({
+    url: normalizeUrl(link),
+    title: titleFromLinkedInUrl(link),
+    preview: `Thought #${index + 1} from my LinkedIn feed on software, AI, and growth.`,
+  }));
+}
+
 export async function getProfileData(): Promise<ProfileData> {
   const content = await readProfileSource();
 
@@ -60,6 +91,16 @@ export async function getProfileData(): Promise<ProfileData> {
     .map((item) => item.trim())
     .filter(Boolean);
 
+  const linkedinPostLinks = Array.from(
+    content.matchAll(/-\s*(https?:\/\/(?:www\.)?linkedin\.com\/[^\s)]+)/gi),
+  )
+    .map((match) => normalizeUrl(match[1]))
+    .filter(
+      (link, index, arr) =>
+        arr.indexOf(link) === index &&
+        /linkedin\.com\/(posts\/|feed\/update\/|pulse\/)/i.test(link),
+    );
+
   return {
     name: matchValue(content, "Name", "Nidesh Kaarthik R S"),
     role: matchValue(content, "Role", "Software Developer"),
@@ -70,5 +111,6 @@ export async function getProfileData(): Promise<ProfileData> {
     ),
     goalsAndHobbies,
     projectLinks,
+    linkedinPostLinks,
   };
 }

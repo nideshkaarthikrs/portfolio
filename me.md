@@ -22,6 +22,8 @@ LinkedIn: linkedin.com/in/nidesh-kaarthik-r-s-6bb535362
 Aspiring Entrepreneur, Magician, Tech fanatic, Leadership Lover
 Cleared JLPT N5
 
+# LinkedIn Posts
+
 # What I want
 - Modern, stylish and sleek portfolio with pokemon theme
 - Sections: Hero, About, Projects, Skills, Blog/Posts, Contact
