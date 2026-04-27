@@ -18,6 +18,11 @@ export type Repo = {
 };
 
 const revalidateSeconds = 60 * 60;
+const reposWithoutLiveDemo = new Set([
+  "promptshield",
+  "disasterrelieflogisticscoordinator",
+  "learnimation",
+]);
 const techKeywords = [
   "next.js",
   "react",
@@ -157,7 +162,9 @@ async function enrichRepoWithReadme(
     readmeDescription:
       extractReadmeDescription(readmeText) ?? repo.description ?? undefined,
     techStackBadges: extractTechStack(repo, readmeText),
-    liveLink: extractLiveLink(readmeText, repo.homepage),
+    liveLink: reposWithoutLiveDemo.has(repo.name.toLowerCase())
+      ? null
+      : extractLiveLink(readmeText, repo.homepage),
   };
 }
 

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { RepoCard } from "@/components/repo-card";
 import { Section } from "@/components/section";
 import { ThoughtCard } from "@/components/thought-card";
-import { getHighlightedRepos, getLatestUserRepos } from "@/lib/github";
+import { getHighlightedRepos } from "@/lib/github";
 import { buildThoughtCards, getProfileData } from "@/lib/profile";
 
 const skills = [
@@ -18,10 +18,7 @@ const skills = [
 export default async function Home() {
   const profile = await getProfileData();
   const thoughtCards = buildThoughtCards(profile.linkedinPostLinks).slice(0, 3);
-  const [highlightedRepos, latestRepos] = await Promise.all([
-    getHighlightedRepos(),
-    getLatestUserRepos(),
-  ]);
+  const highlightedRepos = await getHighlightedRepos();
 
   return (
     <>
@@ -88,18 +85,6 @@ export default async function Home() {
           </div>
         ) : (
           <p className="text-slate-300">Unable to fetch repositories right now.</p>
-        )}
-      </Section>
-
-      <Section title="Latest Activity">
-        {latestRepos.length ? (
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {latestRepos.map((repo) => (
-              <RepoCard key={repo.id} repo={repo} />
-            ))}
-          </div>
-        ) : (
-          <p className="text-slate-300">Latest repo activity will appear here.</p>
         )}
       </Section>
 
