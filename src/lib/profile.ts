@@ -26,8 +26,25 @@ LinkedIn: linkedin.com/in/nidesh-kaarthik-r-s-6bb535362
 - https://github.com/nideshkaarthikrs/DisasterReliefLogisticsCoordinator.git`;
 
 async function readProfileSource() {
+  const candidatePaths = [
+    path.join(/* turbopackIgnore: true */ process.cwd(), "../me.md"),
+    path.join(/* turbopackIgnore: true */ process.cwd(), "me.md"),
+  ];
+
+  for (const filePath of candidatePaths) {
+    try {
+      const content = await readFile(filePath, "utf8");
+      if (content.trim()) return content;
+    } catch {
+      // Try the next path.
+    }
+  }
+
   try {
-    return await readFile(path.join(process.cwd(), "me.md"), "utf8");
+    return await readFile(
+      path.join(/* turbopackIgnore: true */ process.cwd(), "me.md"),
+      "utf8",
+    );
   } catch {
     return fallbackContent;
   }
