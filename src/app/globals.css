@@ -41,6 +41,10 @@ html {
   animation: page-enter 0.42s ease-out both;
 }
 
+.section-reveal {
+  animation: section-reveal 0.55s ease-out both;
+}
+
 @keyframes page-enter {
   from {
     opacity: 0;
@@ -51,6 +55,17 @@ html {
     opacity: 1;
     transform: translateY(0) scale(1);
     filter: blur(0);
+  }
+}
+
+@keyframes section-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -92,6 +107,7 @@ html {
   }
 
   .page-enter,
+  .section-reveal,
   .premium-card,
   .premium-card::before {
     animation: none !important;

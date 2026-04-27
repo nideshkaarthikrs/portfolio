@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const links = [
   { href: "/", label: "Home" },
@@ -9,6 +12,8 @@ const links = [
 ];
 
 export function SiteNav() {
+  const pathname = usePathname();
+
   return (
     <header className="sticky top-0 z-30 border-b border-white/10 bg-slate-950/75 backdrop-blur-xl">
       <nav className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
@@ -19,7 +24,11 @@ export function SiteNav() {
           {links.map((link) => (
             <li key={link.href}>
               <Link
-                className="inline-flex rounded-full border border-transparent px-3 py-1.5 transition hover:border-amber-300/30 hover:text-amber-300"
+                className={`inline-flex rounded-full border px-3 py-1.5 transition ${
+                  pathname === link.href
+                    ? "border-amber-300/40 bg-amber-300/10 text-amber-200"
+                    : "border-transparent hover:border-amber-300/30 hover:text-amber-300"
+                }`}
                 href={link.href}
               >
                 {link.label}
