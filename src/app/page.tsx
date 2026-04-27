@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { RepoCard } from "@/components/repo-card";
 import { Section } from "@/components/section";
-import { ThoughtCard } from "@/components/thought-card";
 import { getHighlightedRepos } from "@/lib/github";
-import { buildThoughtCards, getProfileData } from "@/lib/profile";
+import { getProfileData } from "@/lib/profile";
 
 const skills = [
   "Next.js",
@@ -17,7 +16,6 @@ const skills = [
 
 export default async function Home() {
   const profile = await getProfileData();
-  const thoughtCards = buildThoughtCards(profile.linkedinPostLinks).slice(0, 3);
   const highlightedRepos = await getHighlightedRepos();
 
   return (
@@ -99,26 +97,6 @@ export default async function Home() {
             </li>
           ))}
         </ul>
-      </Section>
-
-      <Section id="blog" title="Writing / Thoughts">
-        {thoughtCards.length ? (
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {thoughtCards.map((post) => (
-              <ThoughtCard key={post.url} thought={post} />
-            ))}
-          </div>
-        ) : (
-          <p className="text-slate-300">
-            Add LinkedIn post URLs in `me.md` to show your latest thoughts here.
-          </p>
-        )}
-        <Link
-          href="/blog"
-          className="mt-5 inline-flex rounded-full border border-white/20 px-5 py-2 text-sm hover:border-indigo-300 hover:text-indigo-200"
-        >
-          See all thoughts
-        </Link>
       </Section>
 
       <Section id="contact" title="Contact">
